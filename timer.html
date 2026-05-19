@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            font-family: 'Exo 2', monospace;
+        }
+        #timer {
+            font-size: 80px;
+            font-weight: bold;
+            color: #919191;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">10</div>
+    <script>
+        // Получаем параметр seconds из URL
+        // Например: timer.html?seconds=15
+        function getSecondsFromURL() {
+            var params = new URLSearchParams(window.location.search);
+            var seconds = params.get('seconds');
+            if (seconds && !isNaN(seconds)) {
+                return Math.min(parseInt(seconds), 999); // максимум 999 секунд
+            }
+            return 10; // значение по умолчанию
+        }
+        
+        var totalSeconds = getSecondsFromURL();
+        var currentSeconds = totalSeconds;
+        var el = document.getElementById('timer');
+        
+        // Показываем начальное значение
+        el.innerText = currentSeconds;
+        
+        // Запускаем таймер
+        setInterval(function() {
+            currentSeconds--;
+            if (currentSeconds < 0) {
+                currentSeconds = totalSeconds; // сброс до исходного значения
+            }
+            el.innerText = currentSeconds;
+        }, 1000);
+    </script>
+</body>
+</html>
