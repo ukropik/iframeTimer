@@ -17,28 +17,41 @@
             font-weight: bold;
             color: #919191;
         }
+        /* Класс для скрытия таймера */
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
     <div id="timer">10</div>
     <script>
-        // Получаем параметр seconds из URL
-        // Например: timer.html?seconds=15
-        function getSecondsFromURL() {
+        // Получаем параметры из URL
+        function getURLParams() {
             var params = new URLSearchParams(window.location.search);
-            var seconds = params.get('seconds');
-            if (seconds && !isNaN(seconds)) {
-                return Math.min(parseInt(seconds), 999); // максимум 999 секунд
-            }
-            return 10; // значение по умолчанию
+            return {
+                seconds: params.get('seconds'),
+                hide: params.get('hide') // параметр для скрытия таймера
+            };
         }
         
-        var totalSeconds = getSecondsFromURL();
-        var currentSeconds = totalSeconds;
+        var params = getURLParams();
         var el = document.getElementById('timer');
         
-        // Показываем начальное значение
+        // Обработка параметра seconds
+        var totalSeconds = 10; // значение по умолчанию
+        if (params.seconds && !isNaN(params.seconds)) {
+            totalSeconds = Math.min(parseInt(params.seconds), 999);
+        }
+        
+        var currentSeconds = totalSeconds;
         el.innerText = currentSeconds;
+        
+        // Обработка параметра hide
+        // hide=1 или hide=true или hide=yes - скрыть таймер
+        if (params.hide && (params.hide === '1' || params.hide === 'true' || params.hide === 'yes')) {
+            el.classList.add('hidden');
+        }
         
         // Запускаем таймер
         setInterval(function() {
