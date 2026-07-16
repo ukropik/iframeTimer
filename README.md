@@ -13,3 +13,5 @@
 <iframe src="https://ukropik.github.io/timer.html?seconds=10" frameborder="0" width="100%" height="100%"></iframe>
 
 Если не указывать ?seconds=, таймер работает по умолчанию на 10 секунд. 999max
+Добавлен параметр hide если равен 1 или true таймер скрыт.
+По умолчанию 0, показан.
